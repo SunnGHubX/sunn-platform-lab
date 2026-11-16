@@ -1,13 +1,13 @@
 # syntax=docker/dockerfile:1
 # ---- build stage: compile wheels with build tools that never reach the runtime image ----
-FROM python:3.12-slim AS build
+FROM python:3.15-slim AS build
 ENV PIP_NO_CACHE_DIR=1 PIP_DISABLE_PIP_VERSION_CHECK=1
 WORKDIR /src
 COPY requirements.txt .
 RUN pip install --prefix=/install -r requirements.txt
 
 # ---- runtime stage: minimal, non-root, read-only friendly ----
-FROM python:3.12-slim
+FROM python:3.15-slim
 LABEL org.opencontainers.image.source="https://github.com/SunnGHubX/sunn-platform-lab" \
       org.opencontainers.image.description="Secure front door for OpenAI-compatible model servers" \
       org.opencontainers.image.licenses="MIT"
